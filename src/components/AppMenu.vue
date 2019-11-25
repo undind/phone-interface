@@ -1,8 +1,8 @@
 <template lang="pug">
   .phone__nav
     ul.nav__links
-      li.nav__item Contacts
-      li.nav__item History
+      router-link(to="/" exact-active-class="nav__item-active").nav__item Contacts
+      router-link(to="/history" exact-active-class="nav__item-active").nav__item History
 </template>
 
 <style lang="postcss" scoped>
@@ -21,6 +21,10 @@
     cursor: pointer;
     position: relative;
     z-index: 1;
+
+    &-active {
+      text-decoration: underline;
+    }
 
     &:hover {
       text-decoration: underline;

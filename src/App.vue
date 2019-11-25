@@ -3,9 +3,9 @@
       .header-container
         app-header
         app-menu
-        .header__search  
+        .header__search(v-if="$route.path === '/'")
           input.header-input
-      contacts
+      router-view
       button.phone__button
         icon(name="dial").button__dial
 </template>
@@ -17,7 +17,7 @@ export default {
     AppMenu: () => import('components/AppMenu.vue'),
     Contacts: () => import('@/views/Contacts.vue'),
     Icon: () => import('components/Icon.vue'),
-  }
+  },
 }
 </script>
 
