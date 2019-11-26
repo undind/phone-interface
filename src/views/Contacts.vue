@@ -1,20 +1,29 @@
 <template lang="pug">
   .contacts
+    .header__search(v-if="$route.path === '/'")
+      input.header-input(v-model="search")
     table.contacts__table
       tr.table__tr(
-        v-for="(user, index) in users"
+        v-for="(user, index) in filteredUsers"
         :key="index"
       )
         td.table__avatar
           icon(name="user").avatar__icon
         td.table__user
           .user__name {{user.name}}
-          .user__number {{user.info}}
+          .user__number {{user.number}}
         td.table__info
           icon(name="info").info__icon
 </template>
 
 <script>
+class User {
+  constructor(name, number) {
+    this.name = name;
+    this.number = number;
+  }
+}
+
 export default {
   components: {
     Icon: () => import('components/Icon.vue'),
@@ -22,29 +31,37 @@ export default {
   data() {
     return {
       users: [
-        {
-          name: 'Sergey Antonov',
-          info: '+7(978)000 65 72'
-        },
-        {
-          name: 'Ivan Petrov',
-          info: '+7(978)000 65 72'
-        },
-        {
-          name: 'Egor Ivanov',
-          info: '+7(978)000 65 72'
-        },
-        {
-          name: 'Victor Nezhin',
-          info: '+7(978)000 65 72'
-        },
-        {
-          name: 'Tom Holland',
-          info: '+7(978)000 65 72'
-        },
-      ]
+        new User(
+          'Sergey Antonov',
+          '+7(978)000 65 72'
+        ),
+        new User(
+          'Ivan Petrov',
+          '+7(978)000 65 72'
+        ),
+        new User(
+          'Egor Ivanov',
+          '+7(978)000 65 72'
+        ),
+        new User(
+          'Victor Nezhin',
+          '+7(978)000 65 72'
+        ),
+        new User(
+          'Tom Holland',
+          '+7(978)000 65 72'
+        ),
+      ],
+      search: ''
     }
   },
+  computed: {
+    filteredUsers() {
+      return this.users.filter(user => {
+        return user.name.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
+  }
 }
 </script>
 

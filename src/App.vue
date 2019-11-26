@@ -3,8 +3,6 @@
       .header-container
         app-header
         app-menu
-        .header__search(v-if="$route.path === '/'")
-          input.header-input
       router-view
       button.phone__button
         icon(name="dial").button__dial
@@ -15,9 +13,20 @@ export default {
   components: {
     AppHeader: () => import('components/AppHeader.vue'),
     AppMenu: () => import('components/AppMenu.vue'),
-    Contacts: () => import('@/views/Contacts.vue'),
     Icon: () => import('components/Icon.vue'),
   },
+  data() {
+    return {
+      search: ''
+    }
+  },
+  computed: {
+    filteredUsers() {
+      return this.users.filter(user => {
+        return user.name.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
+  }
 }
 </script>
 
