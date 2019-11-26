@@ -1,34 +1,75 @@
 <template lang="pug">
   .history
     table.history__table
-      tr.table__tr
+      tr.table__tr(
+        v-for="(user, i) in users"
+        :key="i"
+        draggable="true"
+        @dragstart="dragStart(i, $event)"
+        @dragover.prevent 
+        @drop="dragFinish(i, $event)"
+      )
         td.table__hamburger
           .hamburger.hamburger--stand
             .hamburger-box
               .hamburger-inner
         td.table__user
-          .user__name Sergey Antonov
-          .user__number +7(978)000 65 72
+          .user__name {{user.name}}
+          .user__number {{user.info}}
         td.table__time Today at 10:45 PM
-      tr.table__tr
-        td.table__hamburger
-          .hamburger.hamburger--stand
-            .hamburger-box
-              .hamburger-inner
-        td.table__user
-          .user__name Sergey Antonov
-          .user__number +7(978)000 65 72
-        td.table__time Today at 10:45 PM
-      tr.table__tr
-        td.table__hamburger
-          .hamburger.hamburger--stand
-            .hamburger-box
-              .hamburger-inner
-        td.table__user
-          .user__name Sergey Antonov
-          .user__number +7(978)000 65 72
-        td.table__time 21 of April 2019
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      users: [
+        {
+          name: 'Sergey Antonov',
+          info: '+7(978)000 65 72'
+        },
+        {
+          name: 'Ivan Petrov',
+          info: '+7(978)000 65 72'
+        },
+        {
+          name: 'Egor Ivanov',
+          info: '+7(978)000 65 72'
+        },
+        {
+          name: 'Victor Nezhin',
+          info: '+7(978)000 65 72'
+        },
+        {
+          name: 'Tom Holland',
+          info: '+7(978)000 65 72'
+        },
+      ],
+      dragging: -1
+    }
+  },
+  methods: {
+    removeItemAt(index) {
+      this.users.splice(index, 1);
+    },
+    dragStart(which, ev) {
+      ev.dataTransfer.setData('Text', this.id);
+      ev.dataTransfer.dropEffect = 'move'
+      this.dragging = which;
+    },
+    dragFinish(to, ev) {
+      this.moveItem(this.dragging, to);
+    },
+    moveItem(from, to) {
+      if (to === -1) {
+        this.removeItemAt(from);
+      } else {
+        this.users.splice(to, 0, this.users.splice(from, 1)[0]);
+      }
+    }
+  },
+}
+</script>
 
 <style lang="postcss" scoped>
 .history {
