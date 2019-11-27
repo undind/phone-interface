@@ -1,7 +1,7 @@
 <template lang="pug">
   .contacts
-    .header__search(v-if="$route.path === '/'")
-      input.header-input(v-model="search")
+    .contacts__search(v-if="$route.path === '/'")
+      input.contacts-input(v-model="search")
     table.contacts__table
       tr.table__tr(
         v-for="(user, index) in filteredUsers"
@@ -27,6 +27,8 @@ class User {
 export default {
   components: {
     Icon: () => import('components/Icon.vue'),
+    AppHeader: () => import('components/AppHeader.vue'),
+    AppMenu: () => import('components/AppMenu.vue'),
   },
   data() {
     return {
@@ -66,6 +68,21 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.contacts__search  {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 10px;
+  border-bottom: 1px solid $border-color;
+}
+
+.contacts-input {
+  width: 100%;
+  padding: 5px 10px;
+  border: 2px solid $border-color;
+  outline: none;
+  border-radius: 10px;
+}
+
 .contacts {
   padding: 10px 42px;
 }

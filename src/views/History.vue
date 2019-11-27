@@ -21,6 +21,10 @@
 
 <script>
 export default {
+  components: {
+    AppHeader: () => import('components/AppHeader.vue'),
+    AppMenu: () => import('components/AppMenu.vue'),
+  },
   data() {
     return {
       users: [
