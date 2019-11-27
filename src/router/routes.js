@@ -14,6 +14,16 @@ export default [
     ]
   },
   {
+    path: "/edit",
+    component: () => import('@/views/Primary.vue'),
+    children: [
+      {
+        path: "/edit",
+        component: () => import('@/views/Edit.vue'),
+      }
+    ]
+  },
+  {
     path: '*',
     redirect: '/',
   }
