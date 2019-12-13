@@ -60,7 +60,7 @@ export default {
   computed: {
     filteredUsers() {
       return this.users.filter(user => {
-        return user.name.toLowerCase().includes(this.search.toLowerCase())
+        return user.name.trim().toLowerCase().includes(this.search.trim().toLowerCase())
       })
     }
   }

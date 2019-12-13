@@ -14,12 +14,16 @@ export default [
     ]
   },
   {
-    path: "/edit",
+    path: "/profile",
     component: () => import('@/views/Primary.vue'),
     children: [
       {
-        path: "/edit",
-        component: () => import('@/views/Edit.vue'),
+        path: "/profile",
+        component: () => import('@/views/Profile.vue'),
+      },
+      {
+        path: "/dialpad",
+        component: () => import('@/views/Dialpad.vue'),
       }
     ]
   },

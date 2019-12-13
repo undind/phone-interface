@@ -1,11 +1,19 @@
 <template lang="pug">
   .edit
     .edit__avatar
-      img.edit__img
-    input.edit__input
-    input.edit__input
-    input.edit__input
-    input.edit__input
+      img(src="../images/content/user.png").edit__img
+    input(
+      placeholder="First Name"
+      ).edit__input
+    input(
+      placeholder="Last Name"
+      ).edit__input
+    input(
+      placeholder="Phone Number"
+      ).edit__input
+    input(
+      placeholder="Date of Birth"
+      ).edit__input
     .edit__chars
     button.edit__button
       icon(name="call").edit__icon
@@ -32,6 +40,13 @@ export default {
   height: 170px;
   background: $border-color;
   border: 2px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit__img {
+  width: 30%;
 }
 
 .edit__input {

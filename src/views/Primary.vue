@@ -3,7 +3,9 @@
     .header-container
       app-header
       .header__buttons
-        button.header__button-back
+        router-link(
+          to="/"
+        ).header__button-back
           icon(name="back").header__button-icon
         button.header__button-back
           icon(name="save").header__button-icon.header__button-icon--save
