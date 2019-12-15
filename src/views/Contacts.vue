@@ -4,25 +4,20 @@
       input.contacts-input(v-model="search")
     table.contacts__table
       tr.table__tr(
-        v-for="(user, index) in filteredUsers"
-        :key="index"
+        v-for="item in contacts"
+        :key="item.id"
       )
         td.table__avatar
           icon(name="user").avatar__icon
         td.table__user
-          .user__name {{user.name}}
-          .user__number {{user.number}}
+          .user__name {{`${item.first_name} ${item.last_name}`}}
+          .user__number {{item.phone_number}}
         td.table__info
           icon(name="info").info__icon
 </template>
 
 <script>
-class User {
-  constructor(name, number) {
-    this.name = name;
-    this.number = number;
-  }
-}
+import { mapActions, mapState } from 'vuex';
 
 export default {
   components: {
@@ -32,37 +27,29 @@ export default {
   },
   data() {
     return {
-      users: [
-        new User(
-          'Sergey Antonov',
-          '+7(978)000 65 72'
-        ),
-        new User(
-          'Ivan Petrov',
-          '+7(978)000 65 72'
-        ),
-        new User(
-          'Egor Ivanov',
-          '+7(978)000 65 72'
-        ),
-        new User(
-          'Victor Nezhin',
-          '+7(978)000 65 72'
-        ),
-        new User(
-          'Tom Holland',
-          '+7(978)000 65 72'
-        ),
-      ],
       search: ''
     }
   },
   computed: {
+    ...mapState('contacts', { contacts: state => state.contacts }),
     filteredUsers() {
-      return this.users.filter(user => {
-        return user.name.trim().toLowerCase().includes(this.search.trim().toLowerCase())
+      return this.contacts.filter(user => {
+        return contacts.name.trim().toLowerCase().includes(this.search.trim().toLowerCase())
       })
     }
+  },
+  methods: {
+    ...mapActions('contacts', ['fecthContacts']),
+    async fetchData() {
+      try {
+        await this.fecthContacts();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  },
+  created() {
+    this.fetchData();
   }
 }
 </script>
