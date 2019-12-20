@@ -13,7 +13,7 @@ export default {
   },
   computed: {
     icon() {
-      return require(`../images/icons/${this.name}.svg`).default;
+      return require(`@/images/icons/${this.name}.svg`).default;
     }
   }
 }

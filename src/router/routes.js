@@ -10,7 +10,7 @@ export default [
       {
         path: "/history",
         component: () => import('@/views/History.vue')
-      }
+      },
     ]
   },
   {
@@ -18,12 +18,8 @@ export default [
     component: () => import('@/views/Primary.vue'),
     children: [
       {
-        path: "/profile",
+        path: "",
         component: () => import('@/views/Profile.vue'),
-      },
-      {
-        path: "/dialpad",
-        component: () => import('@/views/Dialpad.vue'),
       }
     ]
   },

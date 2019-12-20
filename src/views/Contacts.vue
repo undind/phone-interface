@@ -5,7 +5,8 @@
     table.contacts__table
       tr.table__tr(
         v-for="item in contacts"
-        :key="item.id"
+        :key="item.contact_id"
+        @click="$router.push({path: 'profile', query: {item}})"
       )
         td.table__avatar
           icon(name="user").avatar__icon
@@ -32,9 +33,9 @@ export default {
   },
   computed: {
     ...mapState('contacts', { contacts: state => state.contacts }),
-    filteredUsers() {
-      return this.contacts.filter(user => {
-        return contacts.name.trim().toLowerCase().includes(this.search.trim().toLowerCase())
+    filteredContacts() {
+      return this.contacts.filter(contact => {
+        return contact.first_name.trim().toLowerCase().includes(this.search.trim().toLowerCase())
       })
     }
   },
@@ -46,9 +47,9 @@ export default {
       } catch (e) {
         console.log(e);
       }
-    }
+    },
   },
-  created() {
+  async created() {
     this.fetchData();
   }
 }

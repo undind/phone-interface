@@ -4,7 +4,10 @@ export default {
     contacts: []
   },
   mutations: {
-    SET_CONTACTS: (state, contacts) => state.contacts = contacts
+    SET_CONTACTS: (state, contacts) => state.contacts = contacts,
+    GET_CONTACT_BY_ID: (state, contactId) => {
+      state.contacts = state.contacts.find(item => item.contact_id === contactId)
+    }
   },
   actions: {
     async fecthContacts({ commit }) {
@@ -15,6 +18,11 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+    async fetchContactById({ commit }, contactId) {
+      const response = await this.$axios.get(`/contacts/${contactId}`);
+      commit('GET_CONTACT_BY_ID', contactId);
+      return response;
     }
   }
 }
