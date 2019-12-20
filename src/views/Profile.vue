@@ -39,7 +39,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('contacts', ['fetchContactById'])
+    ...mapActions('contacts', ['fetchContactById', 'updateContact'])
   },
   async mounted() {
     const id = this.$route.params.id;

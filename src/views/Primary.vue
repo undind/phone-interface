@@ -7,9 +7,11 @@
           to="/"
         ).header__button-back
           icon(name="back").header__button-icon
-        button.header__button-back
+        button(
+          
+        ).header__button-back
           icon(name="save").header__button-icon.header__button-icon--save
-    router-view
+    profile
 </template>
 
 <script>
@@ -17,6 +19,7 @@ export default {
   components: {
     AppHeader: () => import('components/AppHeader.vue'),
     Icon: () => import('components/Icon.vue'),
+    Profile: () => import('./Profile.vue'),
   }
 }
 </script>
