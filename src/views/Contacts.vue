@@ -6,7 +6,7 @@
       tr.table__tr(
         v-for="item in contacts"
         :key="item.contact_id"
-        @click="$router.push({path: 'profile', query: {item}})"
+        @click="$router.replace(`/${item.contact_id}`)"
       )
         td.table__avatar
           icon(name="user").avatar__icon
@@ -39,6 +39,9 @@ export default {
       })
     }
   },
+  watch: {
+    '$route': 'fetchData'
+  },
   methods: {
     ...mapActions('contacts', ['fecthContacts']),
     async fetchData() {
@@ -49,7 +52,7 @@ export default {
       }
     },
   },
-  async created() {
+  async mounted() {
     this.fetchData();
   }
 }

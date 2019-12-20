@@ -2,30 +2,36 @@
   .edit
     .edit__avatar
       img(src="@/images/content/user.png").edit__img
-    input(
+    BasicInput(
       placeholder="First Name"
-      ).edit__input
-    input(
+      v-model="contact.first_name"
+      :disabled="false"
+    )
+    BasicInput(
       placeholder="Last Name"
-      ).edit__input
-    input(
+      v-model="contact.last_name"
+    )
+    BasicInput(
       placeholder="Phone Number"
-      ).edit__input
-    input(
+      v-model="contact.phone_number"
+    )
+    BasicInput(
       placeholder="Date of Birth"
-      ).edit__input
+      v-model="contact.date_birth"
+    )
     .edit__chars
     button.edit__button
       icon(name="call").edit__icon
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   components: {
     AppHeader: () => import('components/AppHeader.vue'),
     Icon: () => import('components/Icon.vue'),
+    BasicInput: () => import('components/BasicInput.vue'),
   },
   data() {
     return {
@@ -36,7 +42,7 @@ export default {
     ...mapActions('contacts', ['fetchContactById'])
   },
   async mounted() {
-    const id = this.$route.query.item.contact_id;
+    const id = this.$route.params.id;
     this.contact = await this.fetchContactById(id);
   },
 }
@@ -105,22 +111,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 30px;
 }
 
 .edit__img {
   width: 30%;
-}
-
-.edit__input {
-  width: 100%;
-  margin-bottom: 20px;
-  outline: none;
-  padding: 7px;
-  border: 2px solid #000;
-
-  &:first-of-type {
-    margin-top: 20px;
-  }
 }
 
 .edit__button {
