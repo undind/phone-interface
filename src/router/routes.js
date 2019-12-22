@@ -15,13 +15,7 @@ export default [
   },
   {
     path: "/:id",
-    component: () => import('@/views/Primary.vue'),
-    children: [
-      {
-        path: "",
-        component: () => import('@/views/Profile.vue'),
-      }
-    ]
+    component: () => import('@/views/Profile.vue'),
   },
   {
     path: '*',

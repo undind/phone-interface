@@ -1,27 +1,38 @@
 <template lang="pug">
-  .edit
-    .edit__avatar
-      img(src="@/images/content/user.png").edit__img
-    BasicInput(
-      placeholder="First Name"
-      v-model="contact.first_name"
-      :disabled="false"
-    )
-    BasicInput(
-      placeholder="Last Name"
-      v-model="contact.last_name"
-    )
-    BasicInput(
-      placeholder="Phone Number"
-      v-model="contact.phone_number"
-    )
-    BasicInput(
-      placeholder="Date of Birth"
-      v-model="contact.date_birth"
-    )
-    .edit__chars
-    button.edit__button
-      icon(name="call").edit__icon
+  .background
+    .header-container
+      app-header
+      .header__buttons
+        router-link(
+          to="/"
+        ).header__button-back
+          icon(name="back").header__button-icon
+        button(
+          @click="updateCurContact(contact)"
+        ).header__button-back
+          icon(name="save").header__button-icon.header__button-icon--save
+    .edit
+      .edit__avatar
+        img(src="@/images/content/user.png").edit__img
+      BasicInput(
+        placeholder="First Name"
+        v-model="contact.first_name"
+      )
+      BasicInput(
+        placeholder="Last Name"
+        v-model="contact.last_name"
+      )
+      BasicInput(
+        placeholder="Phone Number"
+        v-model="contact.phone_number"
+      )
+      BasicInput(
+        placeholder="Date of Birth"
+        v-model="contact.date_birth"
+      )
+      .edit__chars
+      button.edit__button
+        icon(name="call").edit__icon
 </template>
 
 <script>
@@ -39,7 +50,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions('contacts', ['fetchContactById', 'updateContact'])
+    ...mapActions('contacts', ['fetchContactById', 'updateContact']),
+    async updateCurContact(contact) {
+      await this.updateContact(contact);
+    }
   },
   async mounted() {
     const id = this.$route.params.id;
