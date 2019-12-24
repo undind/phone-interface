@@ -2,7 +2,7 @@
   .history
     table.history__table
       tr.table__tr(
-        v-for="(user, i) in users"
+        v-for="(story, i) in histories"
         :key="i"
         draggable="true"
         @dragstart="dragStart(i, $event)"
@@ -14,12 +14,14 @@
             .hamburger-box
               .hamburger-inner
         td.table__user
-          .user__name {{user.name}}
-          .user__number {{user.info}}
-        td.table__time Today at 10:45 PM
+          .user__name {{story.contacts.first_name}} {{story.contacts.last_name}}
+          .user__number {{story.contacts.phone_number}}
+        td.table__time {{story.created_at}}
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
   components: {
     AppHeader: () => import('components/AppHeader.vue'),
@@ -27,34 +29,23 @@ export default {
   },
   data() {
     return {
-      users: [
-        {
-          name: 'Sergey Antonov',
-          info: '+7(978)000 65 72'
-        },
-        {
-          name: 'Ivan Petrov',
-          info: '+7(978)000 65 72'
-        },
-        {
-          name: 'Egor Ivanov',
-          info: '+7(978)000 65 72'
-        },
-        {
-          name: 'Victor Nezhin',
-          info: '+7(978)000 65 72'
-        },
-        {
-          name: 'Tom Holland',
-          info: '+7(978)000 65 72'
-        },
-      ],
       dragging: -1
     }
   },
+  computed: {
+    ...mapState('histories', { histories: state => state.histories })
+  },
   methods: {
+    ...mapActions('histories', ['fethcHistories']),
+    async fetchData() {
+      try {
+        await this.fethcHistories();
+      } catch (e) {
+        console.log(e)
+      }
+    },
     removeItemAt(index) {
-      this.users.splice(index, 1);
+      this.histories.splice(index, 1);
     },
     dragStart(which, ev) {
       ev.dataTransfer.setData('Text', this.id);
@@ -68,16 +59,21 @@ export default {
       if (to === -1) {
         this.removeItemAt(from);
       } else {
-        this.users.splice(to, 0, this.users.splice(from, 1)[0]);
+        this.histories.splice(to, 0, this.histories.splice(from, 1)[0]);
       }
     }
   },
+  async mounted() {
+    this.fetchData();
+  }
 }
 </script>
 
 <style lang="postcss" scoped>
 .history {
   padding: 10px 42px;
+  overflow: auto;
+  height: 567px;
 }
 
 .history__table {

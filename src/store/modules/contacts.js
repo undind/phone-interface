@@ -36,7 +36,6 @@ export default {
     },
     async updateContact({ commit }, contact) {
       const data = Object.assign({}, contact);
-      delete data.created_at;
 
       try {
         const response = await this.$axios.put(`/contacts/${contact.contact_id}`, data);
