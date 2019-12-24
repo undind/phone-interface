@@ -10,11 +10,11 @@ export default {
         return contact.contact_id === editContact.contact_id ? editContact : contact;
       })
     },
-    // GET_CONTACT_BY_ID: (state, contactId) => {
-    //   state.contacts = state.contacts.find(item => {
-    //     item.contact_id === contactId
-    //   })
-    // }
+    GET_CONTACT_BY_ID: (state, contactId) => {
+      state.contacts = state.contacts.filter(item => {
+        return item.contact_id === contactId
+      })
+    }
   },
   actions: {
     async fecthContacts({ commit }) {
@@ -23,12 +23,13 @@ export default {
         commit('SET_CONTACTS', response.data);
         return response;
       } catch (e) {
-        console.log(e)
+        throw new Error(e)
       }
     },
     async fetchContactById({ commit }, contactId) {
       try {
         const response = await this.$axios.get(`/contacts/${contactId}`);
+        commit('GET_CONTACT_BY_ID', response.data.contact_id);
         return response.data;
       } catch (e) {
         throw new Error(e)
