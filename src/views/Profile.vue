@@ -57,7 +57,9 @@ export default {
   },
   async mounted() {
     const id = this.$route.params.id;
-    this.contact = await this.fetchContactById(id);
+    if (id !== undefined) {
+      this.contact = await this.fetchContactById(id);
+    }
   },
 }
 </script>

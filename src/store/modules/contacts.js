@@ -34,11 +34,11 @@ export default {
         throw new Error(e)
       }
     },
-    async updateContact({ commit }, contact) {
-      const data = Object.assign({}, contact);
+    async updateContact({ commit }, { contact_id, date_birth, first_name, last_name, phone_number }) {
+      if (typeof phone_number === 'string') phone_number = Number(phone_number);
 
       try {
-        const response = await this.$axios.put(`/contacts/${contact.contact_id}`, data);
+        const response = await this.$axios.put(`/contacts/${contact_id}`, { date_birth, first_name, last_name, phone_number });
         commit('EDIT_CONTACT', response.data);
         return response;
       } catch (e) {

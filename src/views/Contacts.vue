@@ -6,7 +6,7 @@
       tr.table__tr(
         v-for="item in contacts"
         :key="item.contact_id"
-        @click="$router.replace(`/${item.contact_id}`)"
+        @click="$router.push( {name: 'profile', params: {id: item.contact_id}} )"
       )
         td.table__avatar
           icon(name="user").avatar__icon

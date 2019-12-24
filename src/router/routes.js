@@ -14,7 +14,8 @@ export default [
     ]
   },
   {
-    path: "/:id",
+    path: "/profile",
+    name: 'profile',
     component: () => import('@/views/Profile.vue'),
   },
   {
