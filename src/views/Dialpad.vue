@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   components: {
@@ -92,8 +92,11 @@ export default {
       isTrue: false
     }
   },
+  computed: {
+    ...mapState('histories', { histories: state => state.histories })
+  },
   methods: {
-    ...mapActions('histories', ['createHistory']),
+    ...mapActions('histories', ['createHistory', 'fethcHistories']),
     goBack(contact) {
       this.$router.replace({ name: 'profile', params: {id: contact.contact_id} })
     },
@@ -101,11 +104,21 @@ export default {
       try {
         await this.createHistory(id);
       } catch (e) {
+        console.log('Need id')
+        throw new Error(e);
+      }
+    },
+    async fethcAllHistories() {
+      try {
+        await this.fethcHistories();
+      } catch (e) {
         throw new Error(e);
       }
     }
   },
-  mounted() {
+  async mounted() {
+    await this.fethcAllHistories();
+
     if (this.$route.params.contact !== undefined) {
       this.contact = this.$route.params.contact;
     }
