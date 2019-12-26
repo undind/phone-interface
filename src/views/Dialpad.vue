@@ -68,11 +68,15 @@
           button.dialpad__btn-num 0
         li.dialpad__btn
           button.dialpad__btn-num #
-      button.dialpad__call
+      button(
+        @click="createNewStory(contact.contact_id)"
+      ).dialpad__call
         icon(name="call").dialpad__call-icon
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   components: {
     Icon: () => import('components/Icon.vue'),
@@ -89,8 +93,16 @@ export default {
     }
   },
   methods: {
+    ...mapActions('histories', ['createHistory']),
     goBack(contact) {
       this.$router.replace({ name: 'profile', params: {id: contact.contact_id} })
+    },
+    async createNewStory(id) {
+      try {
+        await this.createHistory(id);
+      } catch (e) {
+        throw new Error(e);
+      }
     }
   },
   mounted() {
