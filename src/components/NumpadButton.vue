@@ -1,5 +1,7 @@
 <template lang="pug">
-  button.phone__button
+  button(
+    @click="$router.replace('/dialpad')"
+  ).phone__button
     icon(name="dial").button__dial
 </template>
 

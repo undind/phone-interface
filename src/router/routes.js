@@ -5,10 +5,12 @@ export default [
     children: [
       {
         path: "/",
+        name: 'contacts',
         component: () => import('@/views/Contacts.vue')
       },
       {
         path: "/history",
+        name: 'history',
         component: () => import('@/views/History.vue')
       },
     ]

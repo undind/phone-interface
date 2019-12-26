@@ -4,7 +4,7 @@
       app-header
       .header__buttons
         button(
-          @click="goBack(contact)"
+          @click="goBack(contact.contact_id)"
         ).header__button-back
           icon(name="back").header__button-icon
         button(
@@ -97,8 +97,12 @@ export default {
   },
   methods: {
     ...mapActions('histories', ['createHistory', 'fethcHistories']),
-    goBack(contact) {
-      this.$router.replace({ name: 'profile', params: {id: contact.contact_id} })
+    goBack(id) {
+      let lastView = localStorage.getItem("LAST_PAGE");
+      if (lastView === "null" || id === undefined) {
+        this.$router.replace('/');
+      }
+      this.$router.replace({name: `${lastView}`, params: { id: id }})
     },
     async createNewStory(id) {
       try {
@@ -118,7 +122,6 @@ export default {
   },
   async mounted() {
     await this.fethcAllHistories();
-
     if (this.$route.params.contact !== undefined) {
       this.contact = this.$route.params.contact;
     }

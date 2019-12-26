@@ -9,4 +9,8 @@ const router = new VueRouter({
   routes 
 });
 
+router.afterEach((to, from) => {
+  localStorage.setItem("LAST_PAGE", from.name);
+});
+
 export default router;
