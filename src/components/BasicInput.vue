@@ -31,6 +31,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    size: {
+      type: String,
+      default: "default"
+    },
     label: {
       type: String,
       default: '',
@@ -53,6 +57,7 @@ export default {
       },
       inputClass() {
         return {
+          [`basic__input-control-${this.size}`]: true,
           'basic__input-control_dirty': this.value.length,
           'basic__input-control_disabled': this.disabled
         };
@@ -79,6 +84,14 @@ export default {
   &:focus {
     border-color: red;
   }
+}
+
+.basic__input-control-large {
+  border: 0;
+  border-bottom: 2px solid #000;
+  padding: 10px 15px;
+  outline: none;
+  font-size: 30px;
 }
 
 .basic__input-disabled {

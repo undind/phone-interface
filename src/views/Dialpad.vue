@@ -1,76 +1,154 @@
 <template lang="pug">
-  .dialpad
-    .dialpad__history
-      table.dialpad__table(v-if="!isTrue")
-        tr.dialpad__tr
-          td.dialpad__info
-            .info__name Sergey Antonov
-            .info__number +7(978)731-72-54
-          td.dialpad__date
-            .date 2019-08-08
-        tr.dialpad__tr
-          td.dialpad__info
-            .info__name Sergey Antonov
-            .info__number +7(978)731-72-54
-          td.dialpad__date
-            .date 2019-08-08
-        tr.dialpad__tr
-          td.dialpad__info
-            .info__name Sergey Antonov
-            .info__number +7(978)731-72-54
-          td.dialpad__date
-            .date 2019-08-08
-        tr.dialpad__tr
-          td.dialpad__info
-            .info__name Sergey Antonov
-            .info__number +7(978)731-72-54
-          td.dialpad__date
-            .date 2019-08-08
-    .dialpad__input
-      input.input__number
-    ul.dialpad__buttons
-      li.dialpad__btn
-        button.dialpad__btn-num 1
-      li.dialpad__btn
-        button.dialpad__btn-num 2
-      li.dialpad__btn
-        button.dialpad__btn-num 3
-      li.dialpad__btn
-        button.dialpad__btn-num 4
-      li.dialpad__btn
-        button.dialpad__btn-num 5
-      li.dialpad__btn
-        button.dialpad__btn-num 6
-      li.dialpad__btn
-        button.dialpad__btn-num 7
-      li.dialpad__btn
-        button.dialpad__btn-num 8
-      li.dialpad__btn
-        button.dialpad__btn-num 9
-      li.dialpad__btn
-        button.dialpad__btn-num *
-      li.dialpad__btn
-        button.dialpad__btn-num 0
-      li.dialpad__btn
-        button.dialpad__btn-num #
-    button.dialpad__call
-      icon(name="call").dialpad__call-icon
+  .background
+    .header-container
+      app-header
+      .header__buttons
+        button(
+          @click="goBack(contact)"
+        ).header__button-back
+          icon(name="back").header__button-icon
+        button(
+          
+        ).header__button-back
+          icon(name="save").header__button-icon.header__button-icon--save
+    .dialpad
+      .dialpad__history
+        table.dialpad__table(v-if="isTrue")
+          tr.dialpad__tr
+            td.dialpad__info
+              .info__name Sergey Antonov
+              .info__number +7(978)731-72-54
+            td.dialpad__date
+              .date 2019-08-08
+          tr.dialpad__tr
+            td.dialpad__info
+              .info__name Sergey Antonov
+              .info__number +7(978)731-72-54
+            td.dialpad__date
+              .date 2019-08-08
+          tr.dialpad__tr
+            td.dialpad__info
+              .info__name Sergey Antonov
+              .info__number +7(978)731-72-54
+            td.dialpad__date
+              .date 2019-08-08
+          tr.dialpad__tr
+            td.dialpad__info
+              .info__name Sergey Antonov
+              .info__number +7(978)731-72-54
+            td.dialpad__date
+              .date 2019-08-08
+      .dialpad__input
+        BasicInput(
+          v-model="contact.phone_number"
+          size="large"
+        )
+      ul.dialpad__buttons
+        li.dialpad__btn
+          button.dialpad__btn-num 1
+        li.dialpad__btn
+          button.dialpad__btn-num 2
+        li.dialpad__btn
+          button.dialpad__btn-num 3
+        li.dialpad__btn
+          button.dialpad__btn-num 4
+        li.dialpad__btn
+          button.dialpad__btn-num 5
+        li.dialpad__btn
+          button.dialpad__btn-num 6
+        li.dialpad__btn
+          button.dialpad__btn-num 7
+        li.dialpad__btn
+          button.dialpad__btn-num 8
+        li.dialpad__btn
+          button.dialpad__btn-num 9
+        li.dialpad__btn
+          button.dialpad__btn-num *
+        li.dialpad__btn
+          button.dialpad__btn-num 0
+        li.dialpad__btn
+          button.dialpad__btn-num #
+      button.dialpad__call
+        icon(name="call").dialpad__call-icon
 </template>
 
 <script>
 export default {
   components: {
     Icon: () => import('components/Icon.vue'),
+    AppHeader: () => import('components/AppHeader.vue'),
+    BasicInput: () => import('components/BasicInput.vue'),
   },
   data() {
     return {
+      contact: {
+        type: Object,
+        default: () => ({})
+      },
       isTrue: false
+    }
+  },
+  methods: {
+    goBack(contact) {
+      this.$router.replace({ name: 'profile', params: {id: contact.contact_id} })
+    }
+  },
+  mounted() {
+    if (this.$route.params.contact !== undefined) {
+      this.contact = this.$route.params.contact;
     }
   },
 }
 </script>
 
 <style lang="postcss" scoped>
+.background {
+  width: 425px;
+  height: 850px;
+  margin: 50px auto;
+  border-radius: 65px;
+  overflow: hidden;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: url('../images/content/background.png') center center / cover no-repeat;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.header__buttons {
+  position: relative;
+  z-index: 1;
+  padding: 0 38px 15px 46px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__button-back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+}
+
+.header__button-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.header__button-icon--save {
+  width: 40px;
+  height: 40px;
+}
+
 .dialpad {
   padding: 10px 50px;
   position: relative;
@@ -99,15 +177,6 @@ export default {
   &:last-child {
     border-bottom: none;
   }
-}
-
-.input__number {
-  width: 100%;
-  border: 0;
-  border-bottom: 2px solid #000;
-  padding: 10px 15px;
-  outline: none;
-  font-size: 30px;
 }
 
 .dialpad__buttons {

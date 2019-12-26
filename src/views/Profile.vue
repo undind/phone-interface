@@ -23,7 +23,6 @@ export default {
   components: {
     AppHeader: () => import('components/AppHeader.vue'),
     Icon: () => import('components/Icon.vue'),
-    BasicInput: () => import('components/BasicInput.vue'),
     ProfileEdit: () => import('components/ProfileEdit.vue'),
   },
   data() {

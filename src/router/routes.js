@@ -19,6 +19,11 @@ export default [
     component: () => import('@/views/Profile.vue'),
   },
   {
+    path: "/dialpad",
+    name: 'dialpad',
+    component: () => import('@/views/Dialpad.vue'),
+  },
+  {
     path: '*',
     redirect: '/',
   }

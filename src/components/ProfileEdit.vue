@@ -19,7 +19,9 @@
       v-model="contact.date_birth"
     )
     .edit__chars
-    button.edit__button
+    button(
+      @click="goToDialpad(contact)"
+    ).edit__button
       icon(name="call").edit__icon
 </template>
 
@@ -34,7 +36,12 @@ export default {
       type: Object,
       default: () =>({})
     }
-  }
+  },
+  methods: {
+    goToDialpad(contact) {
+      this.$router.push({name: 'dialpad', params: { contact }})
+    }
+  },
 }
 </script>
 
