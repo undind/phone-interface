@@ -4,6 +4,11 @@ export default {
     contacts: []
   },
   mutations: {
+    CREATE_CONTACT: (state, contactId) => {
+      state.contacts = state.contacts.filter(item => {
+        return item.contact_id === contactId
+      })
+    },
     SET_CONTACTS: (state, contacts) => state.contacts = contacts,
     EDIT_CONTACT: (state, editContact) => {
       state.contacts = state.contacts.map(contact => {
@@ -17,6 +22,16 @@ export default {
     }
   },
   actions: {
+    async createContact({ commit }, { contact_id, date_birth, first_name, last_name, phone_number }) {
+
+      try {
+        const response = await this.$axios.post('/contacts', { contact_id, date_birth, first_name, last_name, phone_number });
+        commit('CREATE_CONTACT', response.data.contact_id);
+        return response;
+      } catch (e) {
+        throw new Error(e)
+      }
+    },
     async fecthContacts({ commit }) {
       try {
         const response = await this.$axios.get('/contacts');

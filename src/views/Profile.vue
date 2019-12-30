@@ -8,11 +8,12 @@
         ).header__button-back
           icon(name="back").header__button-icon
         button(
-          @click="updateCurContact(contact)"
+          @click="updateOrCreateContact(contact)"
         ).header__button-back
           icon(name="save").header__button-icon.header__button-icon--save
     profile-edit(
       :contact="contact"
+      :key="contact.contact_id"
     )
 </template>
 
@@ -28,21 +29,27 @@ export default {
   data() {
     return {
       contact: {
+        contact_id: String,
         type: Object,
         default: () => ({})
       }
     }
   },
   methods: {
-    ...mapActions('contacts', ['fetchContactById', 'updateContact']),
-    async updateCurContact(contact) {
-      await this.updateContact(contact);
+    ...mapActions('contacts', ['fetchContactById', 'updateContact', 'createContact']),
+    async updateOrCreateContact(contact) {
+      if (contact.contact_id) {
+        return await this.updateContact(contact);
+      }
+      await this.createContact(contact);
     }
   },
   async mounted() {
     const id = this.$route.params.id;
     if (id !== undefined) {
       this.contact = await this.fetchContactById(id);
+    } else {
+      this.contact = this.$route.params.contact;
     }
   },
 }

@@ -8,7 +8,7 @@
         ).header__button-back
           icon(name="back").header__button-icon
         button(
-          
+          @click="createNewContact(contact)"
         ).header__button-back
           icon(name="save").header__button-icon.header__button-icon--save
     .dialpad
@@ -103,6 +103,9 @@ export default {
         this.$router.replace('/');
       }
       this.$router.replace({name: `${lastView}`, params: { id: id }})
+    },
+    createNewContact(contact) {
+      this.$router.replace({name: 'profile', params: { contact: contact }});
     },
     async createNewStory(id) {
       try {
