@@ -3,7 +3,7 @@
     .contacts__search(v-if="$route.path === '/'")
       input.contacts-input(v-model="search")
     contacts-table(
-      v-for="item in contacts"
+      v-for="item in filteredContacts"
       :key="item.contact_id"
       :contact="item"
     )
@@ -25,9 +25,13 @@ export default {
     ...mapState('contacts', { contacts: state => state.contacts }),
     filteredContacts() {
       return this.contacts.filter(contact => {
-        return contact.first_name.trim().toLowerCase().includes(this.search.trim().toLowerCase())
+        if (!isNaN(this.search)) {
+          return String(contact.phone_number).trim().toLowerCase().includes(this.search.trim().toLowerCase())
+        }
+        
+        return (contact.first_name + contact.last_name).trim().toLowerCase().includes(this.search.trim().toLowerCase())
       })
-    }
+    },
   },
   watch: {
     '$route': 'fetchData'

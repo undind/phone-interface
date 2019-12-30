@@ -69,7 +69,7 @@
         li.dialpad__btn
           button.dialpad__btn-num #
       button(
-        @click="createNewStory(contact.contact_id)"
+        @click="createNewStory(contact)"
       ).dialpad__call
         icon(name="call").dialpad__call-icon
 </template>
@@ -107,7 +107,10 @@ export default {
     createNewContact(contact) {
       this.$router.replace({name: 'profile', params: { contact: contact }});
     },
-    async createNewStory(id) {
+    async createNewStory(contact) {
+      const id = contact.contact_id;
+      if (!id) return this.$router.replace({name: "profile", params: { contact: contact }});
+
       try {
         await this.createHistory(id);
       } catch (e) {
