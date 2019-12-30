@@ -29,7 +29,6 @@ export default {
   data() {
     return {
       contact: {
-        contact_id: String,
         type: Object,
         default: () => ({})
       }
@@ -41,7 +40,7 @@ export default {
       if (contact.contact_id) {
         return await this.updateContact(contact);
       }
-      await this.createContact(contact);
+      this.contact = await this.createContact(contact);
     }
   },
   async mounted() {
