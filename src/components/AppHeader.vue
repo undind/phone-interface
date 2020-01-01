@@ -1,6 +1,6 @@
 <template lang="pug">
   .phone__display
-    .phone__date 4:51 PM
+    .phone__date {{date | date('time')}}
     .phone__icons
       icon(name="signal").phone__icon
       icon(name="wifi").phone__icon
@@ -11,6 +11,25 @@
 export default {
   components: {
     Icon: () => import('components/Icon.vue'),
+  },
+  data() {
+    return {
+      date: new Date(),
+      interval: null,
+    }
+  },
+  methods: {
+    addInterval() {
+      this.interval = setInterval(() => {
+        this.date = new Date();
+      }, 1000)
+    }
+  },
+  mounted() {
+    this.addInterval();
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
   }
 }
 </script>
