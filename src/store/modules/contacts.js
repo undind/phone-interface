@@ -45,6 +45,7 @@ export default {
       try {
         const response = await this.$axios.get(`/contacts/${contactId}`);
         commit('GET_CONTACT_BY_ID', response.data.contact_id);
+        response.data.date_birth = response.data.date_birth.slice(0, 10);
         return response.data;
       } catch (e) {
         throw new Error(e)
@@ -52,6 +53,9 @@ export default {
     },
     async updateContact({ commit }, { contact_id, date_birth, first_name, last_name, phone_number }) {
       if (typeof phone_number === 'string') phone_number = Number(phone_number);
+
+      const newDate = new Date(date_birth);
+      date_birth = newDate.toISOString();
 
       try {
         const response = await this.$axios.put(`/contacts/${contact_id}`, { date_birth, first_name, last_name, phone_number });

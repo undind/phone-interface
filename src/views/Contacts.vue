@@ -47,7 +47,7 @@ export default {
     },
   },
   async mounted() {
-    this.fetchData();
+    await this.fetchData();
   }
 }
 </script>

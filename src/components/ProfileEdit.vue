@@ -16,7 +16,7 @@
     )
     BasicInput(
       placeholder="Date of Birth"
-      v-model="formatDayBirth"
+      v-model="contact.date_birth"
       type="date"
     )
     .edit__chars
@@ -31,13 +31,6 @@ export default {
   components: {
     Icon: () => import('components/Icon.vue'),
     BasicInput: () => import('components/BasicInput.vue'),
-  },
-  computed: {
-    formatDayBirth() {
-      if (this.loading) {
-        return this.contact.date_birth.slice("T", 10);
-      }   
-    }
   },
   props: {
     contact: {
