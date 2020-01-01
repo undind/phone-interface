@@ -24,6 +24,9 @@ export default {
   actions: {
     async createContact({ commit }, { contact_id, date_birth, first_name, last_name, phone_number }) {
 
+      const newDate = new Date(date_birth);
+      date_birth = newDate.toISOString();
+
       try {
         const response = await this.$axios.post('/contacts', { contact_id, date_birth, first_name, last_name, phone_number });
         commit('CREATE_CONTACT', response.data.contact_id);

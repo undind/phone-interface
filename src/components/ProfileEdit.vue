@@ -60,7 +60,7 @@ export default {
 
 .edit__avatar {
   width: 100%;
-  height: 170px;
+  height: 140px;
   background: $border-color;
   border: 2px solid #000;
   display: flex;

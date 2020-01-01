@@ -16,10 +16,15 @@
       :key="contact.contact_id"
       :loading="loading"
     )
+    .history__charts
+      canvas(
+        ref="canvas"
+      )
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import { Bar } from "vue-chartjs";
 
 export default {
   components: {
@@ -27,6 +32,7 @@ export default {
     Icon: () => import('components/Icon.vue'),
     ProfileEdit: () => import('components/ProfileEdit.vue'),
   },
+  extends: Bar,
   data() {
     return {
       contact: {
@@ -61,6 +67,20 @@ export default {
     } else {
       this.contact = this.$route.params.contact;
     }
+
+    this.renderChart(
+      {
+        labels: this.contact.histories.map(item => item.created_at.slice(0, 10)),
+        datasets: [
+          {
+            label: "",
+            backgroundColor: "#000",
+            data: []
+          }
+        ]
+      },
+      { responsive: true, maintainAspectRatio: false }
+    );
   },
 }
 </script>
@@ -111,5 +131,14 @@ export default {
 .header__button-icon--save {
   width: 40px;
   height: 40px;
+}
+
+.history__charts {
+  position: absolute;
+  bottom: 85px;
+  width: 85%;
+  height: 220px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>
