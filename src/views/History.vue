@@ -16,7 +16,7 @@
         td.table__user
           .user__name {{story.contacts.first_name}} {{story.contacts.last_name}}
           .user__number {{story.contacts.phone_number}}
-        td.table__time {{story.created_at}}
+        td.table__time {{story.created_at | date('date')}}
 </template>
 
 <script>

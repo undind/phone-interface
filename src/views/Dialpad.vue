@@ -45,7 +45,9 @@
         )
       ul.dialpad__buttons
         li.dialpad__btn
-          button.dialpad__btn-num 1
+          button(
+            @click="press"
+          ).dialpad__btn-num 1
         li.dialpad__btn
           button.dialpad__btn-num 2
         li.dialpad__btn
@@ -89,7 +91,8 @@ export default {
         type: Object,
         default: () => ({})
       },
-      isTrue: false
+      isTrue: false,
+      value: ''
     }
   },
   computed: {
@@ -124,6 +127,9 @@ export default {
       } catch (e) {
         throw new Error(e);
       }
+    },
+    press(event) {
+      this.value = event.target.innerText;
     }
   },
   async mounted() {
