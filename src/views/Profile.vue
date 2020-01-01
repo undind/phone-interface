@@ -14,6 +14,7 @@
     profile-edit(
       :contact="contact"
       :key="contact.contact_id"
+      :loading="loading"
     )
 </template>
 
@@ -31,8 +32,12 @@ export default {
       contact: {
         type: Object,
         default: () => ({})
-      }
+      },
+      loading: false
     }
+  },
+  watch: {
+    
   },
   methods: {
     ...mapActions('contacts', ['fetchContactById', 'updateContact', 'createContact']),
@@ -46,7 +51,13 @@ export default {
   async mounted() {
     const id = this.$route.params.id;
     if (id !== undefined) {
-      this.contact = await this.fetchContactById(id);
+      try {
+        this.contact = await this.fetchContactById(id);
+      } catch (e) {
+        throw new Error(e)
+      } finally {
+        this.loading = true;
+      }
     } else {
       this.contact = this.$route.params.contact;
     }

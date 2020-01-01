@@ -99,8 +99,8 @@ export default {
     ...mapActions('histories', ['createHistory', 'fethcHistories']),
     goBack(id) {
       let lastView = localStorage.getItem("LAST_PAGE");
-      if (lastView === "null" || id === undefined) {
-        this.$router.replace('/');
+      if (lastView === "null" && id === undefined) {
+        return this.$router.replace('/');
       }
       this.$router.replace({name: `${lastView}`, params: { id: id }})
     },

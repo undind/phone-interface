@@ -9,6 +9,10 @@ const router = new VueRouter({
   routes 
 });
 
+// router.beforeEach((to, from, next) => {
+//   console.log(localStorage.getItem("LAST_PAGE"))
+// })
+
 router.afterEach((to, from) => {
   localStorage.setItem("LAST_PAGE", from.name);
 });
