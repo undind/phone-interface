@@ -13,7 +13,6 @@
           icon(name="save").header__button-icon.header__button-icon--save
     profile-edit(
       :contact="contact"
-      :key="contact.contact_id"
       :loading="loading"
     )
     .history__charts
@@ -37,13 +36,10 @@ export default {
     return {
       contact: {
         type: Object,
-        default: () => ({})
+        default: () => ({}),
       },
       loading: false
     }
-  },
-  watch: {
-    
   },
   methods: {
     ...mapActions('contacts', ['fetchContactById', 'updateContact', 'createContact']),
@@ -70,16 +66,47 @@ export default {
 
     this.renderChart(
       {
-        labels: this.contact.histories.map(item => item.created_at.slice(0, 10)),
+        labels: this.contact !== undefined && this.contact.histories ? Object.keys(this.contact.histories.map(item => {
+          return item.created_at.slice(0, 10).replace(/\-/g, "/")
+        }).reduce((acc, el) => {
+          acc[el] = (acc[el] || 0) + 1;
+          return acc;
+        }, [])) : [],
         datasets: [
           {
             label: "",
-            backgroundColor: "#000",
-            data: []
+            showLine: false,
+            barPercentage: 1,
+            barThickness: 40,
+            maxBarThickness: 50,
+            lineTension: 0,
+            borderWidth: 1,
+            borderColor: '#F2A727',
+            backgroundColor: '#F2A727',
+            data: this.contact !== undefined && this.contact.histories ? Object.values(this.contact.histories.map(item => {
+              return item.created_at.slice(0, 10).replace(/\-/g, "/")
+            }).reduce((acc, el) => {
+              acc[el] = (acc[el] || 0) + 1;
+              return acc;
+            }, [])) : [],
           }
         ]
       },
-      { responsive: true, maintainAspectRatio: false }
+      { 
+        responsive: true, 
+        maintainAspectRatio: false,
+        legend: { 
+            display: false,
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              stepSize: 1
+            }
+          }]
+        }
+      }
     );
   },
 }
@@ -135,9 +162,9 @@ export default {
 
 .history__charts {
   position: absolute;
-  bottom: 85px;
+  bottom: 120px;
   width: 85%;
-  height: 220px;
+  height: 175px;
   left: 50%;
   transform: translateX(-50%);
 }
