@@ -1,5 +1,6 @@
 <template lang="pug">
-  .history
+  preloader(v-if="isLoading")
+  .history(v-else)
     table.history__table
       tr.table__tr(
         v-for="(story, i) in histories"
@@ -26,10 +27,12 @@ export default {
   components: {
     AppHeader: () => import('components/AppHeader.vue'),
     AppMenu: () => import('components/AppMenu.vue'),
+    Preloader: () => import("components/Preloader.vue")
   },
   data() {
     return {
-      dragging: -1
+      dragging: -1,
+      isLoading: false
     }
   },
   computed: {
@@ -38,10 +41,13 @@ export default {
   methods: {
     ...mapActions('histories', ['fethcHistories']),
     async fetchData() {
+      this.isLoading = true;
       try {
         await this.fethcHistories();
       } catch (e) {
         console.log(e)
+      } finally {
+        this.isLoading = false;
       }
     },
     removeItemAt(index) {
